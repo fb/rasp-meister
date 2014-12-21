@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>RASP-Meister by Welle</title>
+  <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet" />
+  <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+  <style>
+    img#map {
+      min-height: 300px;
+      max-height: 100%;
+    }
+  </style>
+  <script>
+    const TIME = '#times button';
+    const PARAM = '#parameters button';
+    var time = '';
+    var atime = '';
+    var parameter = '';
+
+    function update() {
+      $('img#map').attr('src',
+      'http://rasp.linta.de/BLACKFOREST_WAVE/' + parameter + '.curr.' + 
+      time + 'lst.w2.png');
+      $('#debug .time').text(time);
+      $('#debug .parameter').text(parameter);
+    }
+
+    $(document).ready(function(e){
+
+      $(PARAM).click(function(e){
+        $(PARAM + '.active').each(function(e){ $(this).removeClass('active') });
+        parameter = $(this).attr('name');
+        update();
+        $(this).addClass('active');
+      });
+
+      $(TIME).click(function(e){
+        atime = $(this).attr('name');
+        $(TIME + '.active').each(function(e){ $(this).removeClass('active') });
+        time = $(this).attr('name');
+        update();
+        $(this).addClass('active');
+      });
+
+      $(TIME).hover(function(e){
+        time = $(this).attr('name');
+        update();
+      }, function(e) {
+        time = atime;
+        update()
+      });
+
+      $('#select div button').each(function(e){
+        $(this).attr('type','button').addClass('btn btn-default');
+        $(this).append($(this).attr('name'));
+      });
+
+      time = $(TIME + ':first-of-type').addClass('active').attr('name');
+      atime = time;
+      parameter = $(PARAM + ':first-of-type').addClass('active').attr('name');
+
+      update();
+    });
+
+  </script>
+  <body>
+
+    <div class="container-fluid">
+
+      <div class="content">
+
+      <div class="row">
+
+        <div class="col-md-2">
+
+          <div id="select">
+            <select class="form-control">
+              <option>BLACKFOREST_WAVE</option>
+            </select>
+            <div id="times" class="btn-xs btn-group-vertical">
+              <button name="0700" />
+              <button name="0800" />
+              <button name="0900" />
+              <button name="1000" />
+              <button name="1100" />
+              <button name="1200" />
+              <button name="1300" />
+              <button name="1400" />
+              <button name="1500" />
+              <button name="1600" />
+              </div>
+
+              <div id="parameters" class="btn-xs btn-group-vertical">
+                <button name="sfcwind" />
+                <button name="press850" />
+                <button name="press700" />
+                <button name="press600" />
+                <button name="press500" />
+                <button name="sounding1" />
+                <button name="sounding2" />
+                <button name="wstar" />
+              </div>
+
+              <div id="debug">
+                <span class="time"></span>
+                <span class="parameter"></span>
+              </div>
+              <div>
+                <p>
+                <a href="http://rasp.linta.de/">rasp.linta.de</a>
+                </p>
+              </div>
+
+            </div>
+
+          </div>
+
+          <div class="col-md-6">
+
+            <div style="float:left;">
+              <img id="map" />
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+  </body>
+
+</html>
